@@ -8,6 +8,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -35,6 +36,7 @@ public abstract class BaseTest {
                 return new FirefoxDriver();
             case "ie":
             case "internet explorer":
+            case "iexplorer":
                 System.setProperty(
                         "webdriver.ie.driver",
                         getResource("/IEDriverServer.exe"));
@@ -69,8 +71,8 @@ public abstract class BaseTest {
      *
      */
     @BeforeClass
-    // TODO use parameters from pom.xml to pass required browser type
-    public void setUp(String browser ) {
+    @Parameters({"browser"})
+    public void setUp(String browser) {
         driver = new EventFiringWebDriver(getDriver(browser));
         driver.register(new EventHandler());
 
